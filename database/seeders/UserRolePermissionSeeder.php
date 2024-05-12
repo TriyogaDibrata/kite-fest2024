@@ -62,11 +62,11 @@ class UserRolePermissionSeeder extends Seeder
                 'remember_token' => Str::random(50)
             ]);
 
-            $role = Role::create(['name' => 'admin-regis']);
-            $role = Role::create(['name' => 'admin-judge']);
-            $role = Role::create(['name' => 'super-admin']);
-            $role = Role::create(['name' => 'participant']);
-            $role = Role::create(['name' => 'developer']);
+            $role_admin_regis = Role::create(['name' => 'admin-regis']);
+            $role_admin_judge = Role::create(['name' => 'admin-judge']);
+            $role_super_admin = Role::create(['name' => 'super-admin']);
+            $role_participant = Role::create(['name' => 'participant']);
+            $role_developer = Role::create(['name' => 'developer']);
 
             $developer->assignRole('developer');
             $admin_pendafataran->assignRole('admin-regis');
@@ -74,7 +74,21 @@ class UserRolePermissionSeeder extends Seeder
             $participant->assignRole('participant');
             $super_admin->assignRole('super-admin');
 
-            
+            $permission = Permission::create(['name' => 'dashboard']);
+            $permission = Permission::create(['name' => 'konfigurasi-roles']);
+            $permission = Permission::create(['name' => 'konfigurasi-users']);
+            $permission = Permission::create(['name' => 'masterdata-categories']);
+            $permission = Permission::create(['name' => 'masterdata-flight']);
+            $permission = Permission::create(['name' => 'participants']);
+            $permission = Permission::create(['name' => 'judge-scores']);
+            $permission = Permission::create(['name' => 'judge-photos']);
+            $permission = Permission::create(['name' => 'judge-recap']);
+
+            $role_developer->syncPermissions(['dashboard', 'konfigurasi-roles', 'konfigurasi-users', 'masterdata-categories', 'masterdata-flight', 'participants', 'judge-scores', 'judge-photos', 'judge-recap']);
+            $role_admin_regis->syncPermissions(['dashboard', 'masterdata-categories', 'masterdata-flight', 'participants']);
+            $role_participant->syncPermissions(['participants']);
+            $role_super_admin->syncPermissions(['dashboard', 'konfigurasi-roles', 'konfigurasi-users', 'masterdata-categories', 'masterdata-flight', 'participants', 'judge-scores', 'judge-photos', 'judge-recap']);
+            $role_admin_judge->syncPermissions(['dashboard', 'judge-scores', 'judge-photos', 'judge-recap']);
 
             // $operator = User::create([
             //     'email' => 'operator@devtest.com',
