@@ -140,23 +140,23 @@
                         <div>{{ auth()->user()->name }}</div>
                         <span>{{ auth()->user()->email }}</span>
                     </div>
-                    <img class="img-user" src="../assets/images/avatar1.png" alt="user"srcset="">
+                    <img class="img-user" src="{{ asset('assets/images/avatar1.png')}}" alt="user"srcset="">
                 </a>
                 <ul class="dropdown-menu small">
-                    <!-- <li class="menu-header">
+                    {{-- <li>
                         <a class="dropdown-item" href="#">Notifikasi</a>
-                    </li> -->
+                    </li> --}}
                     <li class="menu-content ps-menu">
                         <a href="#">
                             <div class="description">
                                 <i class="ti-user"></i> Profile
                             </div>
                         </a>
-                        <a href="#">
+                        {{-- <a href="#">
                             <div class="description">
                                 <i class="ti-settings"></i> Setting
                             </div>
-                        </a>
+                        </a> --}}
                         <a href="#">
                             <div class="description">
                                 <i class="ti-power-off"></i> Logout

@@ -19,9 +19,9 @@
         <div class="row same-height">
             <div class="col-md-12">
                 <div class="card">
-                    {{-- <div class="card-header">
-                        <h4>Monthly Sales</h4>
-                    </div> --}}
+                    <div class="card-header d-flex flex-row-reverse">
+                        <a href="{{ route('users.create') }}" type="button" class="btn mb-2 icon-left btn-primary "><i class="ti-plus"></i>Tambah User</a>
+                    </div>
                     <div class="card-body p-4">
                         <table id="users_table" class="table dt-responsive display">
                             <thead>

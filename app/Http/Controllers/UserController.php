@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Alert;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -46,6 +52,10 @@ class UserController extends Controller
         ->make(true);
         }
 
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+
         return view('konfigurasi.users.index');
     }
 
@@ -53,8 +63,9 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        //
+    {   
+        $roles = Role::pluck('name', 'id');
+        return view('konfigurasi.users.create', compact('roles'));
     }
 
     /**
@@ -62,7 +73,37 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'                  => 'required|string',
+            'email'                 => 'required|string|email|unique:users',
+            'role'                  => 'required|string',
+            'password'              => 'required|min:8|confirmed',
+            'password_confirmation' => 'required|min:8'
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $data = [
+                'name'              => $request->name,
+                'email'             => $request->email,
+                'email_verified_at' => now(),
+                'password'          => Hash::make($request->password),
+            ];
+
+            $user= User::create($data);
+            $user->assignRole($request->role);
+
+            DB::commit();
+
+            Alert::success('Success', 'User created successfully');
+
+        } catch(Exception $e) {
+            DB::rollBack();
+            Alert::error('Gagal menyimpan data', $e);
+        }
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -78,7 +119,10 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::with('roles')->findOrFail($id);
+        $roles = Role::pluck('name', 'id');
+
+        return view('konfigurasi.users.edit', compact('roles', 'user'));
     }
 
     /**
@@ -86,7 +130,47 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name'      => 'required|string',
+            'email'      => ['required', 'string', 'email', Rule::unique('users')->ignore($id, 'id')],
+            'password'              => 'nullable|string|min:8|confirmed',
+            'password_confirmation' => 'nullable|min:8',
+            'role'                  => 'required|string',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            if ($request->has('password')) {
+                $data = [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'email_verified_at' => now(),
+                    'password'          => Hash::make($request->password),
+                ];
+            } else {
+                $data = [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ];
+            }
+
+            $user = User::findOrFail($id);
+            $user->update($data);
+
+            $user->syncRoles([$request->role]);
+
+
+            DB::commit();
+
+            Alert::success('Success', 'User updated successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Alert::error('Gagal menyimpan data', $e);
+        }
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -95,5 +179,8 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id)->delete();
+
+        Alert::success('Hore!', 'User Deleted Successfully');
+        return redirect()->back();
     }
 }

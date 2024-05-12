@@ -56,7 +56,7 @@
 
         @if(isset($delete_url))
             <li>
-                <a href="{{ $delete_url }}" title='Hapus data "{{ $data_name }}" ?' method="DELETE" data-url="{{ $redirect_url }}" class="dropdown-item btn-confirm">Delete</a>
+                <a href="{{ $delete_url }}" title='Hapus data "{{ $data_name }}" ?' method="DELETE" data-url="{{ $redirect_url }}" class="dropdown-item btn-confirm-delete">Delete</a>
             </li>
         @endif
       
