@@ -16,8 +16,9 @@ return new class extends Migration
             $table->integer('parent_id');
             $table->integer('order');
             $table->string('title');
-            $table->string('icon');
-            $table->string('uri');
+            $table->string('icon')->nullable();
+            $table->string('uri')->nullable();
+            $table->string('segment')->nullable();
             $table->string('permission');
             $table->softDeletes();
             $table->timestamps();

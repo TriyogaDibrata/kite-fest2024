@@ -35,7 +35,7 @@
 
                             <div class="form-group mb-3">
                                 <label class="form-label" for="email">Email<span class="text-danger">*</span></label>
-                                <input type="email" name="email" id="name" class="form-control @error('email') is-invalid @enderror" placeholder="Email Address">
+                                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email Address">
                                 @error('email')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

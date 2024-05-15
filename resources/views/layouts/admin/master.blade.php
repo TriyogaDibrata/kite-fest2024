@@ -46,7 +46,6 @@
     @stack('js')
     <!-- ======= -->
     <script src="{{ asset('assets/js/main.min.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/message.js') }}"></script>
     <script>
         Main.init()
     </script>

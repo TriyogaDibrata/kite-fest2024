@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([UserRolePermissionSeeder::class]);
+        $this->call([MenuSeeder::class]);
+        $this->call([KategoriFlightSeeder::class]);
     }
 }

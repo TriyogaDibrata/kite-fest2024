@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('serie');
+            $table->string('sesion');
+            $table->foreignId('category_id');
             $table->date('date');
             $table->time('start');
             $table->time('end');
+            $table->integer('limit');
             $table->softDeletes();
             $table->timestamps();
         });

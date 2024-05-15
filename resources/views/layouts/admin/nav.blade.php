@@ -17,18 +17,51 @@
     </div>
     <div class="sidebar-content">
         <ul>
-            <li class="{{ activeMenu('dashboard')}}">
+            @foreach ($menus = MenuHelper::getMenus() as $menu)
+            @if (count($menu->subMenus) > 0)
+            @can($menu->permission)
+            <li class="{{ activeDropdownMenu($menu->segment) }}">
+                <a href="#" class="main-menu has-dropdown">
+                    <i class="{{ $menu->icon }}"></i>
+                    <span>{{ $menu->title }}</span>
+                </a>
+                <ul class="sub-menu {{ activeSubMenu($menu->segment) }}">
+                    @foreach ($menu->subMenus as $subMenu)
+                    @can($subMenu->permission)
+                    <li class="{{ activeMenu(explode('/', $subMenu->uri)[2])}}"><a href="{{ url($subMenu->uri) }}" class="link"><span>{{ $subMenu->title }}</span></a></li> 
+                    @endcan
+                    @endforeach
+                </ul>
+            </li>
+            @endcan
+            @else
+            @can($menu->permission)
+            <li class="{{ activeMenu( explode('/', $menu->uri)[1])}}">
+                <a href="{{ url($menu->uri) }}" class="link">
+                    <i class="{{ $menu->icon }}"></i>
+                    <span>{{ $menu->title }}</span>
+                </a>
+            </li>
+            @endcan
+            @endif
+            {{-- @if ($menu->subMenus) --}}
+                {{-- <li>{{ $menu->title}} - {{ count($menu->subMenus) }}</li> --}}
+            {{-- @else --}}
+                {{-- <li> tidak ada submenu</li> --}}
+            {{-- @endif --}}
+            @endforeach
+            {{-- <li class="{{ activeMenu('dashboard')}}">
                 <a href="{{ route('dashboard')}}" class="link">
                     <i class="ti-home"></i>
                     <span>Dashboard</span>
                 </a>
-            </li>
+            </li> --}}
             {{-- <li class="menu-category">
                 <span class="text-uppercase">Konfigurasi</span>
             </li> --}}
             {{-- @can('read-konfigurasi') --}}
             {{-- @endcan --}}
-            <li class="{{ activeDropdownMenu('konfigurasi') }}">
+            {{-- <li class="{{ activeDropdownMenu('konfigurasi') }}">
                 <a href="#" class="main-menu has-dropdown">
                     <i class="ti-settings"></i>
                     <span>Konfigurasi</span>
@@ -50,13 +83,13 @@
             </li>
             <li class="{{ activeMenu('participant')}}">
                 <a href="#" class="link">
-                    <i class="ti-user"></i>
+                    <i class="ti-cup"></i>
                     <span>Peserta Lomba</span>
                 </a>
             </li>
             <li class="{{ activeDropdownMenu('judging') }}">
                 <a href="#" class="main-menu has-dropdown">
-                    <i class="ti-cup"></i>
+                    <i class="ti-crown"></i>
                     <span>Penjurian</span>
                 </a>
                 <ul class="sub-menu {{ activeSubMenu('judging') }}">
@@ -64,7 +97,7 @@
                     <li class="{{ activeMenu('photos')}}"><a href="#" class="link"><span>Input Photo</span></a></li>
                     <li class="{{ activeMenu('recaps')}}"><a href="#" class="link"><span>Rekapitulasi Penjurian</span></a></li>
                 </ul>
-            </li>
+            </li> --}}
             
         </ul>
     </div>

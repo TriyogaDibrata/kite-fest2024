@@ -100,7 +100,8 @@ class UserController extends Controller
 
         } catch(Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal menyimpan data', $e);
+            throw $e;
+            Alert::error('Terjadi Kesalahan',  'Gagal Menyimpan Data');
         }
 
         return redirect()->route('users.index');
@@ -165,9 +166,10 @@ class UserController extends Controller
             DB::commit();
 
             Alert::success('Success', 'User updated successfully');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal menyimpan data', $e);
+            throw $e;
+            Alert::error('Terjadi Kesalahan',  'Gagal Menyimpan Data');
         }
 
         return redirect()->route('users.index');
@@ -180,7 +182,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id)->delete();
 
-        Alert::success('Hore!', 'User Deleted Successfully');
+        Alert::success('Berhasil', 'User Deleted Successfully');
         return redirect()->back();
     }
 }

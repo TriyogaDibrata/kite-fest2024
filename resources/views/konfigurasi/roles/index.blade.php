@@ -49,6 +49,7 @@
     <script src="{{ asset('vendor/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/message.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -64,11 +65,6 @@
                 ],
                 pageLength: 10,
                 order: [[ 0, "asc" ]],
-                // columnDefs: [
-                //     {className: "dt-center", targets: 0},
-                //     {className: "dt-center", targets: 3},
-                //     {className: "dt-center", targets: 4},
-                // ],
             })
         })
     </script>

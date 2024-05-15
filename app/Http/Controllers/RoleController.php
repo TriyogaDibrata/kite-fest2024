@@ -15,7 +15,7 @@ use Yajra\DataTables\Facades\DataTables;
 class RoleController extends Controller
 {
     public function __construct() {
-        // $this->middleware('can:create-role')->only('create');
+        $this->middleware('can:konfigurasi-roles');
     }
     /**
      * Display a listing of the resource.
@@ -88,7 +88,8 @@ class RoleController extends Controller
 
         } catch(Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal menyimpan data', $e);
+            throw $e;
+            Alert::error('Terjadi Kesalahan',  'Gagal Menyimpan Data');
         }
 
         return redirect()->route('roles.index');
@@ -144,7 +145,8 @@ class RoleController extends Controller
 
         } catch(Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal menyimpan data', $e);
+            throw $e;
+            Alert::error('Terjadi Kesalahan',  'Gagal Menyimpan Data');
         }
 
         return redirect()->route('roles.index');
