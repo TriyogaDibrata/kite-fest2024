@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 
 function activeMenu($uri = '') {
@@ -18,4 +19,8 @@ function activeSubmenu($uri = '') {
     if(Request::segment(1) == $uri) {
         return 'expand';
     }
+}
+
+function formatTimeHi($time) {
+    return Carbon::parse($time)->format('H:i');
 }

@@ -14,7 +14,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('can:konfigurasi-roles');
     }
     /**
@@ -22,31 +23,31 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             $roles = Role::get();
             return DataTables::of($roles)
-            ->addColumn('action', function ($roles) {
-                return view('datatable.action', [
-                    'edit_url' => route('roles.edit', $roles->id),
-                    'delete_url' => route('roles.destroy', $roles->id),
-                    'data_name' => $roles->name,
-                    'redirect_url' => route('roles.index'),
-                    'custom' => '',
-                ]);
-            })
-            ->editColumn('created_at', function($roles) {
-                return '<span class="badge text-bg-light">'. Carbon::parse($roles->created_at)->locale('en_EN')->isoFormat('dddd, DD MMMM YYYY') .'</span>';
-            })
-            ->addIndexColumn()
-            ->rawColumns(['created_at'])
-            ->make(true);
-            }
-    
-            $title = 'Delete User!';
-            $text = "Are you sure you want to delete?";
-            confirmDelete($title, $text);
-    
-            return view('konfigurasi.roles.index');
+                ->addColumn('action', function ($roles) {
+                    return view('datatable.action', [
+                        'edit_url' => route('roles.edit', $roles->id),
+                        'delete_url' => route('roles.destroy', $roles->id),
+                        'data_name' => $roles->name,
+                        'redirect_url' => route('roles.index'),
+                        'custom' => '',
+                    ]);
+                })
+                ->editColumn('created_at', function ($roles) {
+                    return '<span class="badge text-bg-light">' . Carbon::parse($roles->created_at)->locale('en_EN')->isoFormat('dddd, DD MMMM YYYY') . '</span>';
+                })
+                ->addIndexColumn()
+                ->rawColumns(['created_at'])
+                ->make(true);
+        }
+
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+
+        return view('konfigurasi.roles.index');
     }
 
     /**
@@ -66,27 +67,26 @@ class RoleController extends Controller
     {
         $request->validate([
             'name'          => 'required|string',
-            'permissions'   => 'required|array'      
+            'permissions'   => 'required|array'
         ]);
 
-       
+
         DB::beginTransaction();
-        
+
 
         try {
             $data = [
                 'name' => $request->name,
             ];
 
-            $role= Role::create($data);
-            
+            $role = Role::create($data);
+
             $role->givePermissionTo($request->permissions);
 
             DB::commit();
 
             Alert::success('Success', 'Role created successfully');
-
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             throw $e;
             Alert::error('Terjadi Kesalahan',  'Gagal Menyimpan Data');
@@ -122,12 +122,12 @@ class RoleController extends Controller
     {
         $request->validate([
             'name'          => 'required|string',
-            'permissions'   => 'required|array'      
+            'permissions'   => 'required|array'
         ]);
 
-       
+
         DB::beginTransaction();
-        
+
 
         try {
             $data = [
@@ -136,14 +136,13 @@ class RoleController extends Controller
 
             $role = Role::findOrFail($id);
             $role->update($data);
-            
+
             $role->syncPermissions($request->permissions);
 
             DB::commit();
 
             Alert::success('Success', 'Role updated successfully');
-
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             throw $e;
             Alert::error('Terjadi Kesalahan',  'Gagal Menyimpan Data');

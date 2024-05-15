@@ -17,4 +17,8 @@ class Category extends Model
         'slug',
         'price'
     ];
+
+    public function series() {
+        return $this->hasMany(Flight::class, 'category_id', 'id');
+    }
 }

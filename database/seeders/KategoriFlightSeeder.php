@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Flight;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,7 @@ class KategoriFlightSeeder extends Seeder
         DB::beginTransaction();
 
         try {
-            
+
             $category = Category::create([
                 'name' => "Bebean Remaja",
                 'slug' => strtolower(str_replace(" ", "-", "Bebean Remaja")),
@@ -37,8 +38,37 @@ class KategoriFlightSeeder extends Seeder
                 'price' => 25000
             ]);
 
-            DB::commit();
+            $flight = Flight::create([
+                'serie' => "A",
+                'session' => 1,
+                'category_id' => 1,
+                'date' => "2024-07-28",
+                'start' => "10:00",
+                'end' => "10:30",
+                'limit' => 60
+            ]);
 
+            $flight = Flight::create([
+                'serie' => "A",
+                'session' => 2,
+                'category_id' => 2,
+                'date' => "2024-07-28",
+                'start' => "10:00",
+                'end' => "10:30",
+                'limit' => 60
+            ]);
+
+            $flight = Flight::create([
+                'serie' => "A",
+                'session' => 3,
+                'category_id' => 3,
+                'date' => "2024-07-28",
+                'start' => "10:00",
+                'end' => "10:30",
+                'limit' => 60
+            ]);
+
+            DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
         }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
             $table->string('serie');
-            $table->string('sesion');
+            $table->integer('session');
             $table->foreignId('category_id');
             $table->date('date');
             $table->time('start');
