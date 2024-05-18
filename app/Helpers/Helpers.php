@@ -24,3 +24,12 @@ function activeSubmenu($uri = '') {
 function formatTimeHi($time) {
     return Carbon::parse($time)->format('H:i');
 }
+
+function generateAcronym($string) {
+    $words = explode(" ", $string);
+    $acronym = "";
+    foreach ($words as $w) {
+    $acronym .= mb_substr($w, 0, 1);
+    }
+    return $acronym;
+}

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FlightController;
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RefController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +33,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::group(['prefix' => 'ref'], function () {
+    Route::get('category-list', [RefController::class, 'categoryList'])->name('ref.category_list');
+    Route::get('flight-list', [RefController::class, 'flightList'])->name('ref.flight_list');
+});
 Route::middleware('auth')->group(function () {
     Route::prefix('konfigurasi')->group(function () {
         Route::resource('roles', RoleController::class);
@@ -41,6 +47,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('categories', CategoryController::class);
         Route::resource('flights', FlightController::class);
     });
+
+    //peserta lomba
+    Route::resource('participants', ParticipantController::class);
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

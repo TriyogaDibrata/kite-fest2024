@@ -15,10 +15,17 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
-        'price'
+        'acronym',
+        'price',
+        'chest_no_prefix',
+        'chest_no_digits'
     ];
 
     public function series() {
         return $this->hasMany(Flight::class, 'category_id', 'id');
+    }
+
+    public function participants() {
+        return $this->hasMany(Participant::class, 'category_', 'id');
     }
 }

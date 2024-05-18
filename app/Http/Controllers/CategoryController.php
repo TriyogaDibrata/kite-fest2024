@@ -64,15 +64,20 @@ class CategoryController extends Controller
         $request->validate([
             'name'                  => 'required|string|unique:categories',
             'price'                 => 'required|integer',
+            'chest_no_prefix'       => 'required|string',
+            'chest_no_digits'       => 'required|integer',
         ]);
 
         DB::beginTransaction();
 
         try {
             $data = [
-                'name'      => $request->name,
-                'slug'      => strtolower(str_replace(" ", "-", $request->name)),
-                'price'     => $request->price,
+                'name'              => $request->name,
+                'slug'              => strtolower(str_replace(" ", "-", $request->name)),
+                'acronym'           => generateAcronym($request->name),
+                'price'             => $request->price,
+                'chest_no_prefix'   => $request->chest_no_prefix,
+                'chest_no_digits'   =>  $request->chest_no_digits,
             ];
 
             $category= Category::create($data);
@@ -115,15 +120,20 @@ class CategoryController extends Controller
         $request->validate([
             'name'                  => ['required', 'string', Rule::unique('users')->ignore($id, 'id')],
             'price'                 => 'required|integer',
+            'chest_no_prefix'       => 'required|string',
+            'chest_no_digits'       => 'required|integer',
         ]);
 
         DB::beginTransaction();
 
         try {
             $data = [
-                'name'      => $request->name,
-                'slug'      => strtolower(str_replace(" ", "-", $request->name)),
-                'price'     => $request->price,
+                'name'              => $request->name,
+                'slug'              => strtolower(str_replace(" ", "-", $request->name)),
+                'acronym'           => generateAcronym($request->name),
+                'price'             => $request->price,
+                'chest_no_prefix'   => $request->chest_no_prefix,
+                'chest_no_digits'   =>  $request->chest_no_digits,
             ];
 
             $category= Category::findOrFail($id);

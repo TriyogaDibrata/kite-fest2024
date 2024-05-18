@@ -42,6 +42,22 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="chest_no_prefix">Prefix No. Dada<span class="text-danger">*</span></label>
+                                <input value="{{ old('chest_no_prefix') ?? $category->chest_no_prefix }}" type="text" name="chest_no_prefix" id="chest_no_prefix" class="form-control @error('chest_no_prefix') is-invalid @enderror" placeholder="contoh: 1000">
+                                @error('chest_no_prefix')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="chest_no_digits">Jumlah Digit No. Dada<span class="text-danger">*</span></label>
+                                <input value="{{ old('chest_no_digits') ?? $category->chest_no_digits }}" type="number" name="chest_no_digits" id="chest_no_digits" class="form-control @error('chest_no_digits') is-invalid @enderror" placeholder="Jumlah angka pada nomor dada layangan">
+                                @error('chest_no_digits')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                             <div class="d-flex flex-row-reverse gap-4">
                                 <button type="submit" class="btn mb-2 btn-success">Submit</button>
                                 <a href="{{ route('categories.index')}}" type="button" class="btn mb-2 icon-left btn-light">

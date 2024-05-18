@@ -23,19 +23,28 @@ class KategoriFlightSeeder extends Seeder
             $category = Category::create([
                 'name' => "Bebean Remaja",
                 'slug' => strtolower(str_replace(" ", "-", "Bebean Remaja")),
-                'price' => 50000
+                'acronym' => generateAcronym("Bebean Remaja"),
+                'price' => 50000,
+                'chest_no_prefix' => '000',
+                'chest_no_digits' => 3
             ]);
 
             $category = Category::create([
                 'name' => "Bebean Dewasa",
                 'slug' => strtolower(str_replace(" ", "-", "Bebean Dewasa")),
-                'price' => 100000
+                'acronym' => generateAcronym("Bebean Dewasa"),
+                'price' => 100000,
+                'chest_no_prefix' => '1000',
+                'chest_no_digits' => 4
             ]);
 
             $category = Category::create([
                 'name' => "Bebean Plastik",
                 'slug' => strtolower(str_replace(" ", "-", "Bebean Plastik")),
-                'price' => 25000
+                'acronym' => generateAcronym("Bebean Plastik"),
+                'price' => 25000,
+                'chest_no_prefix' => '00',
+                'chest_no_digits' => 2
             ]);
 
             $flight = Flight::create([

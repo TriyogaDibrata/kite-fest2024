@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('participants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('address');
+            $table->string('phone');
+            $table->foreignId('category_id');
+            $table->foreignId('flight_id');
+            $table->string('chest_no');
             $table->string('slug');
-            $table->string('acronym');
-            $table->integer('price');
-            $table->string('chest_no_prefix');
-            $table->integer('chest_no_digits');
+            $table->tinyInteger('status')->comment('0 : baru, 1 : pembayaran terverifikasi; 2 : hadir')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('participants');
     }
 };

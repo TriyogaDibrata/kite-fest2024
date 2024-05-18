@@ -31,4 +31,9 @@ class Flight extends Model
     {
         return $this->category()->first();
     }
+
+    public function participants()  {
+        return $this->hasMany(Participant::class, 'flight_id', 'id');
+    }
+
 }

@@ -76,6 +76,7 @@ class FlightController extends Controller
             'limit' => 'required|integer'
         ]);
 
+        DB::beginTransaction();
         try {
             $data = [
                 'serie' => $request->serie,
@@ -135,6 +136,7 @@ class FlightController extends Controller
             'limit' => 'required|integer'
         ]);
 
+        DB::beginTransaction();
         try {
             $data = [
                 'serie' => $request->serie,
