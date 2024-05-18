@@ -18,6 +18,7 @@ class Participant extends Model
         'phone',
         'category_id',
         'flight_id',
+        'number',
         'chest_no',
         'slug',
         'status'
@@ -41,5 +42,16 @@ class Participant extends Model
     public function getFlightAttribute()
     {
         return $this->flight()->first();
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function($model) {
+            $category = Category::findOrFail($model->category_id);
+            $number = Participant::where('category_id', $model->category_id)->withTrashed()->max('number') + 1;
+            $model->number = $number;
+            $model->chest_no = $category->acronym . '-' . str_pad($number, $category->chest_no_digits, $category->chest_no_prefix, STR_PAD_LEFT);
+        });
     }
 }

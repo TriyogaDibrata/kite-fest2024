@@ -27,10 +27,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Sekaha Pelayang</th>
+                                    <th>Nama Sekaha</th>
                                     <th>Kategori</th>
-                                    <th>Nomor Layangan</th>
+                                    <th>No. Layangan</th>
                                     <th>Serie Terbang</th>
+                                    <th>Tgl. Daftar</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -59,12 +60,15 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('participants.index') }}",
-                // columns: [
-                //     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
-                //     { data: 'name', name: 'name'},
-                //     { data: 'price', name: 'price'},
-                //     { data: 'action', name: 'action', searchable: false, orderable: false}
-                // ],
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
+                    { data: 'name', name: 'name'},
+                    { data: 'category.name', name: 'category.name'},
+                    { data: 'chest_no', name: 'chest_no'},
+                    { data: 'flying_series', name: 'flying_series'},
+                    { data: 'created_at', name: 'created_at'},
+                    { data: 'action', name: 'action', searchable: false, orderable: false}
+                ],
                 pageLength: 10,
                 order: [[ 0, "asc" ]],
             })

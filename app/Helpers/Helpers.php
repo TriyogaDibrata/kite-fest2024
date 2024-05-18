@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\Request;
 
 function activeMenu($uri = '') {
@@ -32,4 +33,9 @@ function generateAcronym($string) {
     $acronym .= mb_substr($w, 0, 1);
     }
     return $acronym;
+}
+
+function generateUniqeId($table = '', $field = '', $length = 0, $prefix = '') {
+    $unique_id = IdGenerator::generate(['table' => $table, 'field' => $field, 'length' => $length, 'prefix' => $prefix, 'reset_on_prefix_change' => false]);
+    return $unique_id;
 }
