@@ -54,6 +54,12 @@
             </li>
         @endif
 
+        @if(isset($preview_url))
+            <li>
+                <a class="dropdown-item" href="{{ $preview_url }}">View</a>
+            </li>
+        @endif
+
         @if(isset($delete_url))
             <li>
                 <a href="{{ $delete_url }}" title='Hapus data "{{ $data_name }}" ?' method="DELETE" data-url="{{ $redirect_url }}" class="dropdown-item btn-confirm-delete">Delete</a>

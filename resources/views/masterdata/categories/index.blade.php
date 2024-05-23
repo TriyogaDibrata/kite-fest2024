@@ -16,7 +16,7 @@
         </ol>
     </nav>
     <div class="content-wrapper">
-        <div class="row same-height">
+        <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex flex-row-reverse">

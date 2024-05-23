@@ -157,7 +157,10 @@
                                 <i class="ti-settings"></i> Setting
                             </div>
                         </a> --}}
-                        <a href="#">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <div class="description">
                                 <i class="ti-power-off"></i> Logout
                             </div>

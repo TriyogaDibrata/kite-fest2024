@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('number');
             $table->string('slug')->nullable();
             $table->tinyInteger('status')->comment('0 : baru, 1 : pembayaran terverifikasi; 2 : hadir')->default(0);
+            $table->string('trx_number')->unique();
             $table->softDeletes();
             $table->timestamps();
         });

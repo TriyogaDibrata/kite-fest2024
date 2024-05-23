@@ -7,6 +7,7 @@ use App\Models\Participant;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
@@ -23,7 +24,7 @@ class ParticipantController extends Controller
             return DataTables::of($participants)
                 ->addColumn('action', function ($participants) {
                     return view('datatable.action', [
-                        // 'edit_url' => route('participants.edit', $participants->id),
+                        'preview_url' => route('participants.show', $participants->id),
                         'delete_url' => route('participants.destroy', $participants->id),
                         'data_name' => $participants->name,
                         'redirect_url' => route('participants.index'),
@@ -91,7 +92,7 @@ class ParticipantController extends Controller
 
             Alert::success('Success', 'Participant created successfully');
 
-            return redirect()->route('participants.index');
+            return redirect()->route('participants.show', $participant->id);
         } catch (Exception $e) {
             DB::rollBack();
             throw $e;
@@ -104,8 +105,45 @@ class ParticipantController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $participant = Participant::select('*', DB::raw('IF(status = 1, "Lunas", "Belum Bayar") as payment_status'))
+                       ->where('id', $id)->first();
+
+        $title = "Confirm";
+        $text = "Confirm";
+        confirmDelete($title, $text);
+
+        return view('participants.preview', compact(['participant']));
     }
+
+    /**
+     * Confirm payment status
+     */
+
+    public function confirmPayment(string $id) {
+        $participant = Participant::findOrFail($id);
+        $participant->status = 1;
+        $participant->save();
+    }
+
+    /**
+     * Cancel payment status
+     */
+
+     public function cancelPayment(string $id) {
+        $participant = Participant::findOrFail($id);
+        $participant->status = 0;
+        $participant->save();
+    }
+
+    public function print(string $id) {
+        $participant = Participant::findOrFail($id);
+
+        $user = Auth::user();
+        
+        return view('participants.print', compact(['participant']));
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

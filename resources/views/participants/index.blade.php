@@ -11,12 +11,11 @@
     </div> --}}
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="p-2">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item">Masterdata</li>
-            <li class="breadcrumb-item">Kategori</li>
+            <li class="breadcrumb-item">Peserta</li>
         </ol>
     </nav>
     <div class="content-wrapper">
-        <div class="row same-height">
+        <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex flex-row-reverse">

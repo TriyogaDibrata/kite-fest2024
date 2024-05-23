@@ -50,6 +50,9 @@ Route::middleware('auth')->group(function () {
 
     //peserta lomba
     Route::resource('participants', ParticipantController::class);
+    Route::post('participants/confirm-payment/{id}', [ParticipantController::class, 'confirmPayment'])->name('participant.confirm_payment');
+    Route::post('participants/cancel-payment/{id}', [ParticipantController::class, 'cancelPayment'])->name('participant.cancel_payment');
+    Route::get('participants/print/{id}', [ParticipantController::class, 'print'])->name('participant.print');
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

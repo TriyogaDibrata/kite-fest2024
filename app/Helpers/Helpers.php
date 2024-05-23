@@ -26,6 +26,10 @@ function formatTimeHi($time) {
     return Carbon::parse($time)->format('H:i');
 }
 
+function formattedDate($date) {
+    return Carbon::parse($date)->locale('id_ID')->isoFormat('dddd, DD MMMM YYYY');
+}
+
 function generateAcronym($string) {
     $words = explode(" ", $string);
     $acronym = "";

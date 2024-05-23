@@ -10,8 +10,7 @@
     </div> --}}
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="p-2">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item">Konfigurasi</li>
-            <li class="breadcrumb-item"><a href="{{ route('participants.index') }}">Peserta Lomba</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('participants.index') }}">Peserta</a></li>
             <li class="breadcrumb-item">Create</li>
         </ol>
     </nav>
@@ -91,6 +90,7 @@
 
             $('#category_id').on('change', function(ev) {
                 let category_id = ev.target.value;
+                $('#flight_id').val(null).trigger('change');
                 getFlights(category_id);
             })
         });
