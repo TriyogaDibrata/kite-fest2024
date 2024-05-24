@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Participant;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -137,10 +138,15 @@ class ParticipantController extends Controller
 
     public function print(string $id) {
         $participant = Participant::findOrFail($id);
+        $date = Carbon::now();
 
-        $user = Auth::user();
+        // dd(url('/') . '/participants/'. $participant->id);
+
+        // $user = Auth::user();
         
-        return view('participants.print', compact(['participant']));
+        // return view('participants.print', compact(['participant', 'date']));
+        $pdf = Pdf::loadView('participants.print', ['participant' => $participant, 'date' => $date]);
+    	return $pdf->download('bukti-pendaftaran-'.$participant->trx_number.'.pdf');
     }
 
 

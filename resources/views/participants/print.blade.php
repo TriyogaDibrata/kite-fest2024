@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Membuat Laporan PDF Dengan DOMPDF Laravel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -26,33 +27,38 @@
         }
     </style>
     <div class="p-4">
-        <div class="d-flex flex-row align-items-center p-4 border-bottom">
-            <div class="p-4">
-                <img style="height: 100px; width: 100px;" src="{{ asset('assets/images/kop-surat1.png') }}" />
-            </div>
-            <div class="p-4">
-                <h1 style="font-weight: 1000;">Pelayang Badung Kite Fest #2</h1>
-                <div class="d-flex flex-column">
-                    <div>Email : pelayangbadung@gmail.com</div>
-                    <div>Instagram : sekhapelayangbadung</div>
-                </div>
-            </div>
+        <div style="padding-inline: 16px;">
+            <table>
+                <tr>
+                    <td>
+                        <img style="height: 100px; width: 100px;" src="{{ asset('assets/images/kop-surat1.png') }}" />
+                    </td>
+                    <td class="text-center" style="width: 500px;">
+                        <div class="d-flex flex-column p-4">
+                            <h2 style="font-weight: 1000;">SEKHA PELAYANG BADUNG KITE FESTIVAL #2</h2>
+                            <div> Email : pelayangbadung@gmail.com &#x2022; Instagram : &#64;sekhapelayangbadung</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
 
+        <div class='separator'></div>
+
         <div class="p-4">
-            <div class="text-center my-4">
-                <h2 style="font-weight: 700;">Bukti Pendaftaran Peserta Lomba</h2>
+            <div class="text-center">
+                <h3 style="font-weight: 700;">Bukti Pendaftaran Peserta Lomba</h3>
             </div>
 
             <table>
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">Nomor Pendaftaran</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Nomor Registrasi</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">{{ $participant->trx_number }}</td>
                 </tr>
 
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">Tanggal</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Tanggal</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">{{ formattedDate($participant->created_at) }}</td>
                 </tr>
@@ -66,32 +72,32 @@
 
             <table>
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">Nama Sekaha</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Nama Sekha</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">{{ $participant->name }}</td>
                 </tr>
 
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">Alamat</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Alamat</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">{{ $participant->address }}</td>
                 </tr>
 
 
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">No. Hp</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">No. Hp</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">{{ $participant->phone }}</td>
                 </tr>
 
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">Kategori Lomba</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Kategori Lomba</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">{{ $participant->category->name }}</td>
                 </tr>
 
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">Serie Terbang</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Jadwal/Seri Terbang</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">
                         {{ $participant->flight->serie . $participant->flight->session . ' - ' . formattedDate($participant->flight->date) }}
@@ -99,7 +105,7 @@
                 </tr>
 
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">Nomor Peserta</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Nomor Peserta</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">{{ explode('-', $participant->chest_no)[1] }}</td>
                 </tr>
@@ -113,14 +119,14 @@
 
             <table>
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">Biaya Pendaftaran</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Biaya Pendaftaran</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">
                         {{ 'Rp. ' . Number::format($participant->category->price, null, null, 'id') }}</td>
                 </tr>
 
                 <tr>
-                    <td width="200" style="font-size: 12pt; font-weight: 600;">Status</td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Status</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">
                         @if ($participant->status == 1)
@@ -133,16 +139,18 @@
 
             </table>
 
-            <div class="d-flex justify-content-between p-4">
-                <div></div>
-                <div class="d-flex flex-column text-center">
-                    <div>Badung, 21 Juni 2024</div>
-                    <div>Panitia</div>
-                    <div style="padding-top: 100px;">
-                        Joko Hanung Brahmantiyo Dyajadiningrat
-                    </div>
-                </div>
+            <div class='separator my-3'></div>
+
+
+            <div style="margin-top: 20px;">
+                <div style="text-align: end;">Badung, {{ formattedDate($date) }}</div>
+                <div style="text-align: end;">Panitia,</div>
+                <h6 style="padding-top: 80px; font-weight: 600; text-align: end;">
+                    {{ Auth::user()->name }}
+                </h6>
             </div>
+
+            <div style="margin-top: 16px; font-size: 10pt; text-align: center;">** NB: Simpan form pendaftaran ini sebagai bukti keikutsertaan lomba **</div>
 
         </div>
     </div>
