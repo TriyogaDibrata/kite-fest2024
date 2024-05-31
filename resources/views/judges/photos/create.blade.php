@@ -10,7 +10,7 @@
     </div> --}}
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="p-2">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('participants.index') }}">Peserta</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('scores.index') }}">Daftar Nilai</a></li>
             <li class="breadcrumb-item">Create</li>
         </ol>
     </nav>
@@ -19,34 +19,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>User Form</h3>
+                        <h3>Form Input Photo</h3>
                     </div>
                     <div class="card-body p-4">
-                        <form method="POST" action="{{ route('participants.store') }}">
+                        <form method="POST" action="{{ route('photos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="name">Nama Sekaha Pelayang<span class="text-danger">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
-                                @error('name')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="address">Alamat<span class="text-danger">*</span></label>
-                                <textarea type="text" name="address" id="address" class="form-control @error('address') is-invalid @enderror" placeholder="Alamat"></textarea>
-                                @error('address')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="phone">No. Hp<span class="text-danger">*</span></label>
-                                <input type="tel" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="ex: 08x xxx xxx xxx">
-                                @error('phone')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
 
                             <div class="form-group mb-3">
                                 <label class="form-label" for="category_id">Kategori Layangan<span class="text-danger">*</span></label>
@@ -56,17 +33,26 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group mb-3" id="flight_select">
-                                <label class="form-label" for="flight_id">Serie Terbang<span class="text-danger">*</span></label>
-                                <select name="flight_id" id="flight_id" class="form-control @error('flight_id') is-invalid @enderror" placeholder="Select Category" data-control="select2"></select>
-                                @error('flight_id')
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="participant_id">Nomor Peserta<span class="text-danger">*</span></label>
+                                <select name="participant_id" id="participant_id" class="form-control @error('participant_id') is-invalid @enderror" placeholder="Select Category" data-control="select2"></select>
+                                @error('participant_id')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="image">Photo<span class="text-danger">*</span></label>
+                                <input name="image" id="image" type="file" accept="image/jpg, image/png, image/jpeg" class="form-control @error('image') is-invalid @enderror" />
+                                <div class="form-text text-muted">Accept : jpg, jpeg, png. Max : 5mb</div>
+                                @error('image')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="d-flex flex-row-reverse gap-4">
                                 <button type="submit" class="btn mb-2 btn-success">Submit</button>
-                                <a href="{{ route('participants.index')}}" type="button" class="btn mb-2 icon-left btn-light">
+                                <a href="{{ route('photos.index')}}" type="button" class="btn mb-2 icon-left btn-light">
                                     <i class="ti-arrow-left"></i>
                                     Back
                                 </a>
@@ -88,28 +74,23 @@
         $(document).ready(function() {
             $('#category_id').select2({
                 placeholder : 'Pilih Kategori',
-                theme: 'bootstrap-5',
-                allowClear : true
+                theme: 'bootstrap-5'
             });
-            $('#flight_id').select2({
-                placeholder : 'Pilih Serie Terbang',
-                theme: 'bootstrap-5',
-                allowClear: true
+            $('#participant_id').select2({
+                placeholder : 'Pilih Peserta',
+                theme: 'bootstrap-5'
             });
             // $('#note').val(score.note);
-            getCategory();
-            getFlight(1);
-
-            let test = $('#category_id').value;
-            console.log(test);
+            getCatNew();
+            getParticipantNew(1);
 
             $('#category_id').on('change', function(ev) {
-                $('#flight_id').empty();
-                getFlight(ev.target.value);
+                $('#participant_id').empty();
+                getParticipantNew(ev.target.value);
             });
         })
 
-        function getCategory() {
+        function getCatNew() {
             $.ajax({
                 url: "{{ route('ref.category_list')}}",
                 type: "GET",
@@ -125,9 +106,9 @@
             })
         }
 
-        function getFlight(id) {
+        function getParticipantNew(id) {
             $.ajax({
-                url: "{{ route('ref.flight_list')}}",
+                url: "{{ route('ref.participant_list')}}",
                 type: "GET",
                 dataType: 'json',
                 data : {
@@ -135,11 +116,11 @@
                 },
                 success: function(res) {
                     if(res && res.length > 0) {
-                        $('#flight_id').find('option').empty();
+                        $('#particpant_id').find('option').empty();
                         res.forEach(el => {
                             let option = "<option value="+el.id+">"+el.text+"</option>";
                             
-                            $('#flight_id').append(option);
+                            $('#participant_id').append(option);
                         });
                     }
                 }

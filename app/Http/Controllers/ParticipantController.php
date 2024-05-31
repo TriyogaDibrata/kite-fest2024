@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Yajra\DataTables\Facades\DataTables;
 
 class ParticipantController extends Controller
@@ -139,13 +140,11 @@ class ParticipantController extends Controller
     public function print(string $id) {
         $participant = Participant::findOrFail($id);
         $date = Carbon::now();
+        $qrcode = QrCode::size(100)->generate(url('/') . '/participants/'. $participant->id);
 
-        // dd(url('/') . '/participants/'. $participant->id);
-
-        // $user = Auth::user();
         
-        // return view('participants.print', compact(['participant', 'date']));
-        $pdf = Pdf::loadView('participants.print', ['participant' => $participant, 'date' => $date]);
+        // return view('participants.print', compact(['participant', 'date', 'qrcode']));
+        $pdf = Pdf::loadView('participants.print', ['participant' => $participant, 'date' => $date, 'qrcode' => $qrcode]);
     	return $pdf->download('bukti-pendaftaran-'.$participant->trx_number.'.pdf');
     }
 

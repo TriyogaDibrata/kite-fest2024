@@ -97,10 +97,18 @@
                 </tr>
 
                 <tr>
-                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Jadwal/Seri Terbang</h6></td>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Seri/Jadwal Terbang</h6></td>
                     <td width="20" style="font-size: 12pt;">:</td>
                     <td style="font-size: 12pt;">
                         {{ $participant->flight->serie . $participant->flight->session . ' - ' . formattedDate($participant->flight->date) }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="200" style="font-size: 12pt;"><h6 style="font-weight: 700;">Waktu Terbang</h6></td>
+                    <td width="20" style="font-size: 12pt;">:</td>
+                    <td style="font-size: 12pt;">
+                        {{ formatTimeHi($participant->flight->start) ." - ". formatTimeHi($participant->flight->end) ." WITA"}}
                     </td>
                 </tr>
 
@@ -141,14 +149,29 @@
 
             <div class='separator my-3'></div>
 
+            <table style="margin-top: 20px;">
+                <tr>
+                    <td><img src="data:image/png;base64, {!! base64_encode($qrcode) !!} "></td>
+                    <td style="width: 500px; text-align:right;">
+                            <div style="text-align: end;">Badung, {{ formattedDate($date) }}</div>
+                            <div style="text-align: end;">Panitia,</div>
+                            <h6 style="padding-top: 80px; font-weight: 600; text-align: end;">
+                                {{ Auth::user()->name }}
+                            </h6>
+                    </td>
+                </tr>
+            </table>
 
-            <div style="margin-top: 20px;">
+            {{-- <img src="data:image/png;base64, {!! base64_encode()) !!} "> --}}
+            {{-- <img src="data:image/png;base64, {!! $qrcode !!}"> --}}
+
+            {{-- <div style="margin-top: 20px;">
                 <div style="text-align: end;">Badung, {{ formattedDate($date) }}</div>
                 <div style="text-align: end;">Panitia,</div>
                 <h6 style="padding-top: 80px; font-weight: 600; text-align: end;">
                     {{ Auth::user()->name }}
                 </h6>
-            </div>
+            </div> --}}
 
             <div style="margin-top: 16px; font-size: 10pt; text-align: center;">** NB: Simpan form pendaftaran ini sebagai bukti keikutsertaan lomba **</div>
 

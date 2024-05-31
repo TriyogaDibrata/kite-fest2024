@@ -3,9 +3,11 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RefController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('dashboard'));
 });
 
 Route::get('/email/verify', function () {
@@ -36,6 +38,7 @@ Route::get('/dashboard', function () {
 Route::group(['prefix' => 'ref'], function () {
     Route::get('category-list', [RefController::class, 'categoryList'])->name('ref.category_list');
     Route::get('flight-list', [RefController::class, 'flightList'])->name('ref.flight_list');
+    Route::get('participant-list', [RefController::class, 'participantList'])->name('ref.participant_list');
 });
 Route::middleware('auth')->group(function () {
     Route::prefix('konfigurasi')->group(function () {
@@ -46,6 +49,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('masterdata')->group(function () {
         Route::resource('categories', CategoryController::class);
         Route::resource('flights', FlightController::class);
+    });
+
+    Route::prefix('judge')->group(function () {
+        Route::resource('scores', ScoreController::class);
+        Route::resource('photos', PhotoController::class);
     });
 
     //peserta lomba

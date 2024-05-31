@@ -42,4 +42,22 @@ class RefController extends Controller
         }
     }
 
+    public function participantList(Request $request) 
+    {
+        if($request->ajax()) {
+            $participants = Participant::where('category_id', $request->category_id)->get();
+            
+            $data = [];
+
+            for($i = 0; $i < count($participants); $i++) {
+                
+                    $data[$i] = [
+                        'text' => explode("-", $participants[$i]->chest_no)[1] . " - " . $participants[$i]->name,
+                        'id' => $participants[$i]->id
+                    ];
+            }
+            return response()->json($data);
+        }
+    }
+
 }

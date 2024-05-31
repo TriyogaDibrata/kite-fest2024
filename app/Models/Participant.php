@@ -35,6 +35,14 @@ class Participant extends Model
         return $this->belongsTo(Flight::class, 'flight_id', 'id');
     }
 
+    public function scores() {
+        return $this->hasMany(Score::class, 'participant_id', 'id');
+    }
+
+    public function photos() {
+        return $this->hasMany(Photo::class, 'participant_id', 'id');
+    }
+
     public function getCategoryAttribute()
     {
         return $this->category()->first();
