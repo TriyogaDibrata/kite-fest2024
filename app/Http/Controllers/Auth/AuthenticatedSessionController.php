@@ -29,6 +29,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        toast('Login Success', 'success', 'top-right');
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

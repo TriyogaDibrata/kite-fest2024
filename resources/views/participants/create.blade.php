@@ -19,7 +19,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>User Form</h3>
+                        <h3>Participant Form</h3>
                     </div>
                     <div class="card-body p-4">
                         <form method="POST" action="{{ route('participants.store') }}">

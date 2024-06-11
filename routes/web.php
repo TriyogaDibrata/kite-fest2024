@@ -5,6 +5,7 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RecapController;
 use App\Http\Controllers\RefController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScoreController;
@@ -54,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('judge')->group(function () {
         Route::resource('scores', ScoreController::class);
         Route::resource('photos', PhotoController::class);
+        Route::get('recap', [RecapController::class, 'index'])->name('recaps.index');
     });
 
     //peserta lomba

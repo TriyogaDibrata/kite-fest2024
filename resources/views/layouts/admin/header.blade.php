@@ -147,11 +147,11 @@
                         <a class="dropdown-item" href="#">Notifikasi</a>
                     </li> --}}
                     <li class="menu-content ps-menu">
-                        <a href="#">
+                        {{-- <a href="#">
                             <div class="description">
                                 <i class="ti-user"></i> Profile
                             </div>
-                        </a>
+                        </a> --}}
                         {{-- <a href="#">
                             <div class="description">
                                 <i class="ti-settings"></i> Setting

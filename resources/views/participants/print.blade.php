@@ -64,9 +64,9 @@
                 </tr>
             </table>
 
-            <div class='separator my-3'></div>
+            <div class='separator my-2'></div>
 
-            <div class="my-4">
+            <div class="my-2">
                 <h5 style="font-weight: 700;">Informasi Peserta</h5>
             </div>
 
@@ -119,9 +119,9 @@
                 </tr>
             </table>
 
-            <div class='separator my-3'></div>
+            <div class='separator my-2'></div>
 
-            <div class="my-4">
+            <div class="my-2">
                 <h5 style="font-weight: 700;">Status Pembayaran</h5>
             </div>
 
@@ -147,7 +147,7 @@
 
             </table>
 
-            <div class='separator my-3'></div>
+            <div class='separator my-2'></div>
 
             <table style="margin-top: 20px;">
                 <tr>

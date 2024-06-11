@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call([KategoriFlightSeeder::class]);
         
         $faker = Faker::create('id_ID');
-        $length = 100;
+        $length = 50;
         for($i = 0; $i < $length; $i++) {
             $paticipant = Participant::create([
                 'name' => $faker->name('male'),

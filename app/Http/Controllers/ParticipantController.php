@@ -145,7 +145,7 @@ class ParticipantController extends Controller
         
         // return view('participants.print', compact(['participant', 'date', 'qrcode']));
         $pdf = Pdf::loadView('participants.print', ['participant' => $participant, 'date' => $date, 'qrcode' => $qrcode]);
-    	return $pdf->download('bukti-pendaftaran-'.$participant->trx_number.'.pdf');
+    	return $pdf->download('bukti-pendaftaran-'.str_replace(".", "-", $participant->trx_number).'.pdf');
     }
 
 
