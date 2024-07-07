@@ -20,17 +20,18 @@ class PhotoController extends Controller
     {
         if ($request->ajax()) {
             $photos = Photo::get();
+
             return DataTables::of($photos)
                 ->addColumn('participant_no', function ($photos) {
                     $number = explode("-", $photos->participant->chest_no);
                     return $number[1];
                 })
-                ->editColumn('full_path', function ($photos) {
-                    return '<img style="width: 100px; height: 100px; object-fit: cover;" src="'.$photos->full_path.'"/>';
+                ->editColumn('fullpath', function ($photos) {
+                    return '<img style="width: 100px; height: 100px; object-fit: cover;" src="'.$photos->fullpath.'"/>';
                 })
                 ->addColumn('action', function ($photos) {
                     return view('datatable.action', [
-                        'edit_url' => route('photos.edit', $photos->id),
+                        // 'edit_url' => route('photos.edit', $photos->id),
                         'delete_url' => route('photos.destroy', $photos->id),
                         'data_name' => $photos->participant->chest_no,
                         'redirect_url' => route('photos.index'),
@@ -38,7 +39,7 @@ class PhotoController extends Controller
                     ]);
                 })
                 ->addIndexColumn()
-                ->rawColumns(['full_path'])
+                ->rawColumns(['fullpath'])
                 ->make(true);
         }
 
@@ -81,7 +82,7 @@ class PhotoController extends Controller
                 $path = '/storage/uploads/' . $filename;
                 $photo->update([
                     'path' => $path,
-                    'full_path' => url($path),
+                    'fullpath' => url($path),
                 ]);
             }
 

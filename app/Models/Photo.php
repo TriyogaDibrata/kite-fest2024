@@ -14,7 +14,7 @@ class Photo extends Model
     protected $fillable = [
         'participant_id',
         'path',
-        'full_path'
+        'fullpath'
     ];
 
     protected $appends = ['participant'];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Participant;
+use App\Rules\ParticipantNoRule;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
@@ -33,14 +34,14 @@ class ParticipantController extends Controller
                         'custom' => '',
                     ]);
                 })
-                ->editColumn('chest_no', function($participants) {
+                ->editColumn('chest_no', function ($participants) {
                     $no = explode("-", $participants->chest_no);
                     return $no[1];
                 })
                 ->editColumn('created_at', function ($participants) {
                     return '<span class="badge text-bg-light">' . Carbon::parse($participants->created_at)->locale('en_EN')->isoFormat('dddd, DD MMMM YYYY') . '</span>';
                 })
-                ->addColumn('flying_series', function($participants) {
+                ->addColumn('flying_series', function ($participants) {
                     return $participants->flight->serie . $participants->flight->session . " - " . Carbon::parse($participants->flight->date)->locale('id_ID')->isoFormat('dddd, DD MMMM YYYY');
                 })
                 ->addIndexColumn()
@@ -68,12 +69,15 @@ class ParticipantController extends Controller
      */
     public function store(Request $request)
     {
+        $category = Category::findOrFail($request->category_id);
+
         $request->validate([
-            'name' => 'required|string',
-            'address' => 'required|string',
-            'phone' => 'required|string|max:12',
-            'category_id' => 'required|integer',
-            'flight_id' => 'required|integer',
+            'name' => ['required','string'],
+            'address' => ['required','string'],
+            'phone' => ['required','string', 'max:12'],
+            'category_id' => ['required','string'],
+            'chest_no' => ['required', 'max:' . $category->chest_no_digits, 'min:' . $category->chest_no_digits, new ParticipantNoRule($request->category_id)],
+            'flight_id' => ['required','string'],
         ]);
 
         DB::beginTransaction();
@@ -85,6 +89,7 @@ class ParticipantController extends Controller
                 'address' => $request->address,
                 'phone' => $request->phone,
                 'category_id' => $request->category_id,
+                'chest_no' => $category->acronym .'-'. $request->chest_no,
                 'flight_id' => $request->flight_id,
             ];
 
@@ -108,7 +113,7 @@ class ParticipantController extends Controller
     public function show(string $id)
     {
         $participant = Participant::select('*', DB::raw('IF(status = 1, "Lunas", "Belum Bayar") as payment_status'))
-                       ->where('id', $id)->first();
+            ->where('id', $id)->first();
 
         $title = "Confirm";
         $text = "Confirm";
@@ -121,7 +126,8 @@ class ParticipantController extends Controller
      * Confirm payment status
      */
 
-    public function confirmPayment(string $id) {
+    public function confirmPayment(string $id)
+    {
         $participant = Participant::findOrFail($id);
         $participant->status = 1;
         $participant->save();
@@ -131,21 +137,23 @@ class ParticipantController extends Controller
      * Cancel payment status
      */
 
-     public function cancelPayment(string $id) {
+    public function cancelPayment(string $id)
+    {
         $participant = Participant::findOrFail($id);
         $participant->status = 0;
         $participant->save();
     }
 
-    public function print(string $id) {
+    public function print(string $id)
+    {
         $participant = Participant::findOrFail($id);
         $date = Carbon::now();
-        $qrcode = QrCode::size(100)->generate(url('/') . '/participants/'. $participant->id);
+        $qrcode = QrCode::size(100)->generate(url('/') . '/participants/' . $participant->id);
 
-        
+
         // return view('participants.print', compact(['participant', 'date', 'qrcode']));
         $pdf = Pdf::loadView('participants.print', ['participant' => $participant, 'date' => $date, 'qrcode' => $qrcode]);
-    	return $pdf->download('bukti-pendaftaran-'.str_replace(".", "-", $participant->trx_number).'.pdf');
+        return $pdf->download('bukti-pendaftaran-' . str_replace(".", "-", $participant->trx_number) . '.pdf');
     }
 
 

@@ -53,6 +53,11 @@ class Participant extends Model
         return $this->flight()->first();
     }
 
+    public function getPhotosAttribute()
+    {
+        return $this->photos()->get();
+    }
+
     public static function boot()
     {
         parent::boot();

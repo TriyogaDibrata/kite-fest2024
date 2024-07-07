@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PhotoController;
@@ -32,16 +33,20 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::group(['prefix' => 'ref'], function () {
     Route::get('category-list', [RefController::class, 'categoryList'])->name('ref.category_list');
     Route::get('flight-list', [RefController::class, 'flightList'])->name('ref.flight_list');
     Route::get('participant-list', [RefController::class, 'participantList'])->name('ref.participant_list');
 });
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
+
+    //dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::prefix('konfigurasi')->group(function () {
         Route::resource('roles', RoleController::class);
         Route::resource('users', UserController::class);
@@ -55,7 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('judge')->group(function () {
         Route::resource('scores', ScoreController::class);
         Route::resource('photos', PhotoController::class);
-        Route::get('recap', [RecapController::class, 'index'])->name('recaps.index');
+        Route::resource('recaps', RecapController::class);
+        // Route::get('recap', [RecapController::class, 'index'])->name('recaps.index');
     });
 
     //peserta lomba

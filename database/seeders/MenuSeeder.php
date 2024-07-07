@@ -143,7 +143,7 @@ class MenuSeeder extends Seeder
                 'order' => 3,
                 'title' => 'Rekapitulasi Nilai',
                 'icon' => '',
-                'uri' => '/judge/recap',
+                'uri' => '/judge/recaps',
                 'permission' => 'judge-recap',
                 'segment' => 'judge'
             ]);

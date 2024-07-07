@@ -22,7 +22,7 @@
                         <h3>Participant Form</h3>
                     </div>
                     <div class="card-body p-4">
-                        <form method="POST" action="{{ route('participants.store') }}">
+                        <form method="POST" class="form" action="{{ route('participants.store') }}">
                             {{ csrf_field() }}
                             <div class="form-group mb-3">
                                 <label class="form-label" for="name">Nama Sekaha Pelayang<span class="text-danger">*</span></label>
@@ -60,6 +60,14 @@
                                 <label class="form-label" for="flight_id">Serie Terbang<span class="text-danger">*</span></label>
                                 <select name="flight_id" id="flight_id" class="form-control @error('flight_id') is-invalid @enderror" placeholder="Select Category" data-control="select2"></select>
                                 @error('flight_id')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="chest_no">No. Peserta<span class="text-danger">*</span></label>
+                                <input type="string" name="chest_no" id="chest_no" class="form-control @error('chest_no') is-invalid @enderror" placeholder="Nomor Peserta">
+                                @error('chest_no')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone');
             $table->foreignId('category_id');
             $table->foreignId('flight_id');
-            $table->string('chest_no')->unique();
+            $table->string('chest_no');
             $table->integer('number');
             $table->string('slug')->nullable();
             $table->tinyInteger('status')->comment('0 : baru, 1 : pembayaran terverifikasi; 2 : hadir')->default(0);

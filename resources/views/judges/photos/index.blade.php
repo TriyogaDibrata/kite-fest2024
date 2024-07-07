@@ -61,7 +61,7 @@
                     // { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
                     { data: 'participant_no', name: 'participant_no'},
                     { data: 'participant.category.name', name: 'participant.category.name'},
-                    { data: 'full_path', name: 'full_path'},
+                    { data: 'fullpath', name: 'fullpath'},
                     { data: 'action', name: 'action', searchable: false, orderable: false}
                 ],
                 pageLength: 10,

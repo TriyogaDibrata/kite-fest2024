@@ -18,18 +18,17 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    {{-- <div class="card-header d-flex flex-row-reverse">
-                        <a href="{{ route('photos.create') }}" type="button" class="btn mb-2 icon-left btn-primary "><i class="ti-plus"></i>Input Photo</a>
-                    </div> --}}
-                    <div></div>
+                    <div class="card-header d-flex flex-row-reverse">
+                        <a href="{{ route('recaps.create') }}" type="button" class="btn mb-2 icon-left btn-primary "><i class="ti-plus"></i>Buat Rekapitulasi</a>
+                    </div>
                     <div class="card-body p-4">
-                        <table id="photos_table" class="table dt-responsive display">
+                        <table id="recaps_table" class="table dt-responsive display">
                             <thead>
                                 <tr>
-                                    {{-- <th>No</th> --}}
-                                    <th>No. Peserta</th>
+                                    <th>No</th>
                                     <th>Kategori</th>
-                                    <th>Photo</th>
+                                    <th>Keterangan</th>
+                                    <th>Tanggal Dibuat</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -54,15 +53,15 @@
 
     <script>
         $(document).ready(function() {
-            var userDataTable = $('#photos_table').DataTable({
+            var userDataTable = $('#recaps_table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('photos.index') }}",
+                ajax: "{{ route('recaps.index') }}",
                 columns: [
-                    // { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
-                    { data: 'participant_no', name: 'participant_no'},
-                    { data: 'participant.category.name', name: 'participant.category.name'},
-                    { data: 'full_path', name: 'full_path'},
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
+                    { data: 'category.name', name: 'category.name'},
+                    { data: 'desc', name: 'desc'},
+                    { data: 'created_at', name: 'created_at'},
                     { data: 'action', name: 'action', searchable: false, orderable: false}
                 ],
                 pageLength: 10,

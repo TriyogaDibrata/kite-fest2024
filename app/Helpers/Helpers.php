@@ -1,5 +1,7 @@
 <?php
 
+use App\Charts\ParticipantChart;
+use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
 use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\Request;
@@ -42,4 +44,16 @@ function generateAcronym($string) {
 function generateUniqeId($table = '', $field = '', $length = 0, $prefix = '') {
     $unique_id = IdGenerator::generate(['table' => $table, 'field' => $field, 'length' => $length, 'prefix' => $prefix, 'reset_on_prefix_change' => false]);
     return $unique_id;
+}
+
+function pChart() : \ArielMejiaDev\LarapexCharts\HorizontalBar {
+    $chart = LarapexChart::horizontalBarChart()
+    ->setTitle('Los Angeles vs Miami.')
+    ->setSubtitle('Wins during season 2021.')
+    ->setColors(['#FFC107', '#D32F2F'])
+    ->addData('San Francisco', [6, 9, 3, 4, 10, 8])
+    ->addData('Boston', [7, 3, 8, 2, 6, 4])
+    ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June']);
+
+    return $chart;
 }
