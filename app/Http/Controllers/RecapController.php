@@ -6,6 +6,7 @@ use App\Models\Participant;
 use App\Models\Recap;
 use App\Models\RecapDetail;
 use App\Models\Score;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -87,7 +88,7 @@ class RecapController extends Controller
             if (count($score) > 0) {
                 $recap = Recap::create([
                     'category_id' => $request->category_id,
-                    'desc' => $request->datefmt_set_calendar
+                    'desc' => $request->desc
                 ]);
 
                 if ($recap) {
@@ -105,7 +106,7 @@ class RecapController extends Controller
                                 'participant_id' => $score[$key]->p_id,
                                 'score_1' => (int)explode(',', $score[$key]->nilai_juri)[0],
                                 'score_2' => (int)explode(',', $score[$key]->nilai_juri)[1],
-                                'score_3' => $min_score,
+                                'score_3' => (int)$score[$key]->min_nilai,
                                 'note' => $score[$key]->catatan
                             ]);
                         } else {
@@ -158,6 +159,21 @@ class RecapController extends Controller
         ->get();
 
         return view('judges.recaps.detail', compact(['recap', 'recap_details']));
+    }
+
+
+    public function print(string $id)
+    {
+        $recap = Recap::findOrFail($id);
+        $recap_details = RecapDetail::where('recap_id', $id)
+        ->select('recap_details.*', DB::raw('(recap_details.score_1 + recap_details.score_2 + recap_details.score_3) as total'))
+        ->orderBy('total', 'desc')
+        ->get();
+
+
+        // return view('participants.print', compact(['participant', 'date', 'qrcode']));
+        $pdf = Pdf::loadView('judges.recaps.export', ['recap' => $recap, 'recap_details' => $recap_details]);
+        return $pdf->download('rekapitulasi-' . $recap->category->slug . '.pdf');
     }
 
     /**

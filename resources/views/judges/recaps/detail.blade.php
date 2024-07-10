@@ -20,6 +20,9 @@
                         <h4> {{ 'Rekapitulasi Nilai Kategori ' . $recap->category->name}} </h4>
                     </div>
                     <div class="card-body">
+                        <div class="card-header d-flex flex-row-reverse">
+                            <a href="{{ route('recaps.print', $recap->id) }}" type="button" class="btn mb-2 icon-left btn-primary "><i class="ti-printer"></i>Cetak Rekapitulasi</a>
+                        </div>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -27,7 +30,7 @@
                                     <th rowspan="2" scope="col">Nama Peserta</th>
                                     <th rowspan="2" scope="col">Nomor Peserta</th>
                                     <th colspan="3" class="text-center">Nilai</th>
-                                    <th rowspan="2">Photo</th>
+                                    <th rowspan="2" scope="col">Photo</th>
                                     <th rowspan="2" scope="col" class="text-center">Total</th>
                                 </tr>
                                 <tr>
@@ -49,7 +52,11 @@
                                     <td class="text-center">{{ $recap_detail->score_2 }}</td>
                                     <td class="text-center">{{ $recap_detail->score_3 }}</td>
                                     <td class="text-center">
-                                        <img style="width: 100px; height: 100px; object-fit: cover;" src="{{ $recap_detail->photo->fullpath }}" />
+                                        @if ($recap_detail->photo)
+                                            <img style="width: 100px; height: 100px; object-fit: cover;" src="{{ $recap_detail->photo->fullpath }}" />
+                                        @else
+                                            -- Tidak ada photo --
+                                        @endif
                                     </td>
                                     <td class="text-center">{{ $recap_detail->total }}</td>
                                 </tr>

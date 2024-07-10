@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             for($j = 0; $j < rand(1,3); $j++) {
                 $score = Score::create([
                     'participant_id' => $participanta->id,
-                    'score' => rand(50,99),
+                    'score' => rand(60,99),
                     'note' => $faker->text(10)
                 ]);
             }
@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
             for($j = 0; $j < rand(1,3); $j++) {
                 $score = Score::create([
                     'participant_id' => $participantb->id,
-                    'score' => rand(50,99),
+                    'score' => rand(60,99),
                     'note' => $faker->text(10)
                 ]);
             }
@@ -97,7 +97,7 @@ class DatabaseSeeder extends Seeder
             for($j = 0; $j < rand(1,3); $j++) {
                 $score = Score::create([
                     'participant_id' => $participantc->id,
-                    'score' => rand(50,99),
+                    'score' => rand(60,99),
                     'note' => $faker->text(10)
                 ]);
             }

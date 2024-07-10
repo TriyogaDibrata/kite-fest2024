@@ -61,6 +61,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('scores', ScoreController::class);
         Route::resource('photos', PhotoController::class);
         Route::resource('recaps', RecapController::class);
+        //Print Recap
+        Route::get('recaps/print/{id}', [RecapController::class, 'print'])->name('recaps.print');
         // Route::get('recap', [RecapController::class, 'index'])->name('recaps.index');
     });
 

@@ -15,7 +15,7 @@ class ParticipantChart
         $this->chart = $chart;
     }
 
-    public function build(): \ArielMejiaDev\LarapexCharts\HorizontalBar
+    public function build(): \ArielMejiaDev\LarapexCharts\PieChart
     {
         $participant = Participant::rightJoin('categories', function ($query) {
             $query->on('participants.category_id', 'categories.id');
@@ -28,10 +28,15 @@ class ParticipantChart
             array_push($name, $participant[$key]->name);
             array_push($total, $participant[$key]->total);
         }
-        return $this->chart->horizontalBarChart()
-            ->setTitle('Jumlah Peserta')
-            ->setSubtitle('Peserta lomba berdasarkan kategori')
-            ->addData('Jumlah Peserta', $total)
-            ->setXAxis($name);
+        // return $this->chart->pieChart()
+        //     ->setTitle('Jumlah Peserta')
+        //     ->setSubtitle('Peserta lomba berdasarkan kategori')
+        //     ->addData('Jumlah Peserta', $total)
+        //     ->setXAxis($name);
+        return $this->chart->pieChart()
+        ->setTitle('Jumlah Peserta Bedasarkan Kategori')
+        ->setSubtitle('Kite Festival #2 2024')
+        ->addData($total)
+        ->setLabels($name);
     }
 }

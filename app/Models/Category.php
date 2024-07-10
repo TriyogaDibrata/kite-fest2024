@@ -21,11 +21,11 @@ class Category extends Model
         'chest_no_digits'
     ];
 
-    public function series() {
+    public function flights() {
         return $this->hasMany(Flight::class, 'category_id', 'id');
     }
 
     public function participants() {
-        return $this->hasMany(Participant::class, 'category_', 'id');
+        return $this->hasMany(Participant::class, 'category_id', 'id');
     }
 }
